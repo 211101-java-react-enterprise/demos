@@ -1,0 +1,10 @@
+# Default ignored files
+# IDE-specific files
+.idea/
+*.iml
+.out/
+
+# Build files and directories
+out/
+*.class
+*.jar
