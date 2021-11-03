@@ -3,3 +3,8 @@
 # IDE-specific files 
 .idea/
 *.iml
+
+# Build files and directories
+out/
+*.class
+*.jar
