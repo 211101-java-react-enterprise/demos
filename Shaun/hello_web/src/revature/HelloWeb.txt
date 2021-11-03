@@ -1,0 +1,27 @@
+package com.revature.hello_web;
+
+import com.sun.httpserver.HttpServer;
+import java.to.IOException;
+import java.util.concurrent.Executors;
+import java.net.InetSocketAddress;
+
+public class HelloWeb {
+
+public static void main (String[] args) {
+	try {
+	
+		HttpServer webserver = HttpServer.create(new InetSocketAddress (808), 0 );
+		webserver.setExecutor(Executors.newFixedThreadPool(5));
+		webserver.createContext("/hello, httpExchange -> {
+			String payload = "Hello Web!";
+			httpExchange.sendResponseHEaders(200,payload.length());
+			httpExchange.getResponceBody().write(payload.getBytes());
+			}};
+			webserver.start();
+			System.out.println("Application server started and listening at http://localhost:8080/hello");
+			
+	}catch (IOException e) {
+		e.printStackTrace();
+		}
+	}
+}
