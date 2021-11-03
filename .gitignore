@@ -1,0 +1,5 @@
+# This is a comment in a .gitignore file
+
+# IDE-specific files 
+.idea/
+*.iml
