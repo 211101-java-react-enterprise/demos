@@ -1,0 +1,16 @@
+# This is a comment in a .gitignore file
+
+# IDE-Specific Files
+.idea/
+
+# Any iml files
+*.iml
+
+# Any Class files
+*.class
+
+# Ignore the out folder
+out/
+
+#Ignore any jar files
+.jar
