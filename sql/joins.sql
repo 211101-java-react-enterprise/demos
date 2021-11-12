@@ -19,6 +19,8 @@
 		+--------------------------------------+
 		
 			Theta Join
+				+ When your ON clause uses an arbitrary comparison <, >, >=, <= etc
+				
 			Equi Join
 				+ "Natural join"
 				+ The join occurs on a column whose name is shared between both tables
