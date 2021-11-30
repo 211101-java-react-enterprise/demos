@@ -58,9 +58,9 @@ public class FootballCoach implements Coach {
     }
 
     @Autowired // required here since we are using setter based injection
-    public void setMotivationService(MotivationService motivationService) {
+    public void setMotivationService(MotivationService sportMotivationService) { // autowiring by name (overridden if @Primary is used)
         System.out.println("FootballCoach#setMotivationService invoked!");
-        this.motivationService = motivationService;
+        this.motivationService = sportMotivationService;
     }
 
     @PostConstruct // J2EE annotation equivalent to setting an init-method for this bean

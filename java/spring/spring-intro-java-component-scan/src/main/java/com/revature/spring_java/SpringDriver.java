@@ -2,6 +2,7 @@ package com.revature.spring_java;
 
 import com.revature.spring_java.config.AppConfig;
 import com.revature.spring_java.models.Coach;
+import com.revature.spring_java.models.CodeCoach;
 import com.revature.spring_java.models.FootballCoach;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -34,6 +35,12 @@ public class SpringDriver {
             System.out.println(footballCoach.getTeamName());
             System.out.println(footballCoach.getEmail());
             System.out.println(footballCoach.getTeamSize());
+
+            //------------------------------------------------------------------------
+            System.out.println();
+            CodeCoach codeCoach = beanContainer.getBean("codeCoach", CodeCoach.class);
+            System.out.println(codeCoach.getDailyWorkout());
+            System.out.println(codeCoach.getMotivation());
 
         } catch (Exception e) {
             e.printStackTrace();
