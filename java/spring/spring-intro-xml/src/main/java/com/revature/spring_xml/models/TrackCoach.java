@@ -21,4 +21,9 @@ public class TrackCoach implements Coach {
         return "The track coach tells you: " + motivationService.provideMotivationalQuote();
     }
 
+    @Override
+    public MotivationService getMotivationService() {
+        return motivationService;
+    }
+
 }

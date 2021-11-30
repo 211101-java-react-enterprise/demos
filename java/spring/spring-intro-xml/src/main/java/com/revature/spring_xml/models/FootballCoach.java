@@ -8,11 +8,16 @@ public class FootballCoach implements Coach {
     private String teamName;
     private MotivationService motivationService;
 
+    public FootballCoach() {
+        System.out.println("FootballCoach#<init> invoked!");
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
+        System.out.println("FootballCoach#setEmail invoked!");
         this.email = email;
     }
 
@@ -21,15 +26,18 @@ public class FootballCoach implements Coach {
     }
 
     public void setTeamName(String teamName) {
+        System.out.println("FootballCoach#setTeamName invoked!");
         this.teamName = teamName;
     }
 
+    @Override
     public MotivationService getMotivationService() {
         return motivationService;
     }
 
     // Setter based injection (optional dependencies)
     public void setMotivationService(MotivationService motivationService) {
+        System.out.println("FootballCoach#setMotivationService invoked!");
         this.motivationService = motivationService;
     }
 
@@ -56,4 +64,5 @@ public class FootballCoach implements Coach {
         return "The football coach tells you: " + motivationService.provideMotivationalQuote();
 
     }
+
 }

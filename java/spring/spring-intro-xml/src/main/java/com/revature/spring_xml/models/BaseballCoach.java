@@ -7,7 +7,13 @@ public class BaseballCoach implements Coach {
     private final MotivationService motivationService;
 
     public BaseballCoach(MotivationService motivationService) {
+        System.out.println("BaseballCoach#<init> invoked!");
         this.motivationService = motivationService;
+    }
+
+    @Override
+    public MotivationService getMotivationService() {
+        return motivationService;
     }
 
     @Override
