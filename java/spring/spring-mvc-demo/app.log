@@ -1,0 +1,2 @@
+2021-12-01 15:16:17,737 [main] INFO  com.revature.quizzard.web.util.ContextLoaderListener - Initializing application
+2021-12-01 15:16:17,890 [main] INFO  com.revature.quizzard.web.util.ContextLoaderListener - Application initialized!
