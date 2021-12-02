@@ -101,5 +101,9 @@ public class TestController {
         System.out.println("Caught more exceptions in controller with message: " + e.getMessage());
     }
 
+    @GetMapping("/test14")
+    public String test14() {
+        return "index";
+    }
 
 }
