@@ -389,7 +389,9 @@ console.log(simplifiedCard);
 console.log('+------------------------------+');
 console.log(typeof(new Map()));
 
-// Make a custom map data structure (using closures!)
+// Make a custom map data structure
+// Implementation of the "revealing module" design pattern
+// https://medium.com/@Rahulx1/revealing-module-pattern-tips-e3442d4e352
 function MyCustomMap() {
 
     let entryArray = [];
@@ -448,3 +450,91 @@ anotherMap.set('valueA', 1);
 anotherMap.set('valueB', 3);
 console.log(anotherMap.get('valueB'));
 console.log(anotherMap);
+
+console.log('+------------------------------+');
+
+/*
+    Type Coercion and Truthy/Falsy Values
+
+    Falsy Values:
+        - ''/"" (empty string)
+        - 0
+        - null
+        - undefined
+        - false
+        - NaN
+ */
+
+console.log(7 + '7' + 7); // "777"
+console.log(7 + 7 + '7'); // "147"
+
+let username = 'wsingleton'; // pretend we obtained some value from an HTML form on the page
+let password = 'p4ssw0rd'; // pretend we obtained some value from an HTML form on the page
+
+if (username && password) {
+    console.log(`Provided credentials: {username:${username}, password:${password}}`);
+} else {
+    console.log('Invalid credentials provided!');
+}
+
+console.log('hello' - 3); // NaN = Not a Number
+console.log(typeof('hello' - 3)); // that's right, Not a Number is a number.
+
+console.log(10 / 0); // Positive infinity
+console.log(-10 / 0); // Negative infinity
+
+let nan_1 = 'hello' - 3;
+let nan_2 = 'hello' - 3;
+
+console.log(nan_1 == nan_2); // NaN is never equal to itself (in fact all operations on NaN yield false or raise an error)
+
+// Difference between =, ==, and ===
+let z = 1; // = is the assignment operator
+console.log(7 == '7'); // == checks for "coerced" equality (attempts to coerce values to be compatible before evaluating)
+console.log(7 === '7'); // === does not allow type coercion, and will return false if types are not same
+
+console.log('hello' + 3); // coerce 3 into '3', then concatenate
+
+console.log('+------------------------------+');
+
+
+function guardedLogin(un, pw) {
+    console.log(`Provided login credentials: ${un}, ${pw}`);
+}
+
+// Guard operator
+let loginUsername = 'wsingleton';
+let loginPassword = 'password';
+(loginUsername && loginPassword) && guardedLogin(loginUsername, loginPassword);
+
+// Default operator
+function returnsSomething(x) {
+    return (x % 2 == 0) ? {a: 1} : null; // ternary operator (same as Java's)
+}
+
+let obj = returnsSomething(3) || {b:2}; 
+console.log(obj);
+
+console.log('+-------------------------------------------------+');
+
+// Playing around with the DOM (basics)
+function login() {
+    let username = document.getElementById('login-username').value;
+    let password = document.getElementById('login-password').value;
+
+    if (username && password) {
+        console.log(`Provided login credentials: ${username}, ${password}`);
+    } else {
+        alert('You need to provide credentials!');
+    }
+
+}
+document.getElementById('login-btn').addEventListener('click', login);
+
+let token = ''; 
+
+function isTokenValid() {
+    return !!token; // neat little trick to check for the original truthy/falsy value of anything
+}
+
+console.log(isTokenValid());
