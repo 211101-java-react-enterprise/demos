@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+    The beans.xml (default name; not required to be call this) is the registry file which contains
+    our bean definitions that will Spring what classes we want it to manage for us.
+-->
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- Provide the bean definition for our MotivationService -->
+    <bean id="motivationService" class="com.revature.spring_xml.services.MotivationService"/>
+
+    <!-- Provide a bean definition for a bean named myCoach -->
+    <bean id="myCoach" class="com.revature.spring_xml.models.BaseballCoach" scope="prototype">
+        <constructor-arg ref="motivationService"/>
+    </bean>
+
+    <!-- Provide a bean definition for a FootballCoach -->
+    <bean id="footballCoach" class="com.revature.spring_xml.models.FootballCoach" init-method="customInit" destroy-method="customDestroy">
+        <property name="motivationService" ref="motivationService"/>
+        <property name="teamName" value="Spring Sprouts"/>
+        <property name="email" value="${coach-email}"/>
+    </bean>
+
+    <context:property-placeholder location="app.properties"/>
+
+
+</beans>
