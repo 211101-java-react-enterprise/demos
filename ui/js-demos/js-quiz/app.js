@@ -15,6 +15,7 @@ window.onload = () => {
     buttonDiv.style.cssFloat = 'left';
     submitBtn.setAttribute('id', 'submit');
     submitBtn.setAttribute('class', 'btn btn-primary');
+    submitBtn.setAttribute('disabled', 'true');
     
     // Add some text to display within the submit button
     submitBtn.innerText = 'Submit Quiz';
@@ -60,23 +61,42 @@ function buildQuiz() {
         output.push(`
         <br/>
         <div>${currentQuestion.question}</div>
-        <div>${answers.join('')}</div>
+        <div class="answer" ans="${currentQuestion.correctAnswer}">${answers.join('')}</div>
         `);
     });
 
     // Combine our output array's contents into a single string of HTML and put it on the page
     quizContainer.innerHTML = output.join('');
 
-
 }
 
-
 function isQuizValid() {
+    let quizContainer = document.getElementById('quiz');
+    let counter = 0;
 
+    for(let i = 0; i < quizQuestions.length; i++) {
+        if(document.querySelector(`input[name=question-${i}]:checked`).value) {
+            counter++;
+        }
+    }
+
+    if(counter == quizQuestions.length) {
+        document.getElementById('submit').removeAttribute('disabled');
+    }
 }
 
 function gradeQuiz() {
-
+    let ref = document.getElementsByClassName('answer');
+    let correctCounter = 0;
+    for(let i = 0; i < quizQuestions.length; i++) {
+        let realAnswer = ref[i].getAttribute('ans');
+        let userAnswer = document.querySelector(`input[name=question-${i}]:checked`).value;
+        if(realAnswer == userAnswer) {
+            correctCounter++;
+        }
+    }
+    console.log(correctCounter/quizQuestions.length);
+    document.getElementById('results').innerHTML = correctCounter/quizQuestions.length*100 + '%';
 }
 
 let quizQuestions = [
