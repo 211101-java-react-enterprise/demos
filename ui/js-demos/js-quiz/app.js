@@ -72,6 +72,37 @@ function buildQuiz() {
 
 
 function isQuizValid() {
+    //make sure all ansers are selected
+    // let checked = document.querySelector('input[type=radio]:checked');
+    // let answers = document.querySelectorAll(`[name="question-${i}"]`);
+
+    // for (let i = 0; i < quizQuestions.length; i++) {
+    //     let answers = document.querySelectorAll(`[name="question-${i}"]`);
+    //     console.log(answers);
+    // }
+    
+    let checked = document.querySelectorAll('input[type=radio]:checked');
+    console.log(checked);
+    if(checked.length >= quizQuestions.length) {
+        console.log(true);
+    }
+    else return false;
+    //let count = 0;
+    
+    // if($('input[type=radio]:checked').length==5){
+    //     //all yes elements are checked
+    //     console.log('yes');
+    // } else{
+    //     console.log('waaaaaaaaaaaaaaaaa');
+    // }
+   
+
+    // if( checked !=null){// && count >= quizQuestions.length){
+    //     console.log('congratss!');
+    // }else{
+    //     console.log('aww');
+    // }
+    // return false;
 
 }
 
