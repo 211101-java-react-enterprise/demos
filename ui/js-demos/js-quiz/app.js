@@ -1,3 +1,4 @@
+
 window.onload = () => {
     console.log('The window has loaded!');
 
@@ -28,6 +29,8 @@ window.onload = () => {
     // Add event listeners for validating and grading the quiz
     buttonDiv.addEventListener('mouseover', isQuizValid);
     submitBtn.addEventListener('click', gradeQuiz);
+
+    
 
     buildQuiz();
 
@@ -67,16 +70,85 @@ function buildQuiz() {
     // Combine our output array's contents into a single string of HTML and put it on the page
     quizContainer.innerHTML = output.join('');
 
-
+    document.getElementById('submit').addEventListener('click', isQuizValid);
 }
 
-
+// TODO: Implement me
+// Function that checks if a quiz is valid before putting it in
 function isQuizValid() {
+    console.log("Validating Quiz!");
+    // Default our validation to false
+    let isValid = true;
 
+    try {
+        quizQuestions.forEach((currentQuestion, index) => {
+            var currRadio = document.querySelector(`input[name=question-${index}]:checked`).value;
+            if (currRadio === null){
+                isValid = false;
+            }
+        })
+    }
+    catch {
+        isValid = false;
+    }
+    
+    if (!isValid) alert('Please answer every question!');
 }
 
+// TODO: Implement me
+// Function that can grade a given quiz
 function gradeQuiz() {
 
+    // Select the results container
+    let resultContainer = document.getElementById('results');
+
+    // Create an array which can hold the HTML that we will eventually render on the page
+    const output = [];
+
+    // Loop through the array of questions and build some HTML for each one
+    quizQuestions.forEach((currentQuestion, index) => {
+
+        // Create an array for storing this question's answer HTML
+        const answers = [];
+
+        // Check their answer
+        var givenAnswer = document.querySelector(`input[name=question-${index}]:checked`).value;
+        var isCorrect = givenAnswer == currentQuestion.correctAnswer;
+
+        // For each answer in this question create a radio button
+        for (let letter in currentQuestion.answers) {
+            // Regardless of if they got it right, the correct answer will be given in green
+            if (letter == currentQuestion.correctAnswer) {
+                answers.push(`
+                <input type="radio" name="question-${index}" value="${letter}" color:00FF00/>
+                ${letter}: ${currentQuestion.answers[letter]}
+                <br/>`);
+            }
+            else if (letter == givenAnswer && !isCorrect){
+                answers.push(`
+                <input type="radio" name="question-${index}" value="${letter}" class="bg-danger text-white"/>
+                ${letter}: ${currentQuestion.answers[letter]}
+                <br/>`);
+            }
+            else {
+                answers.push(`
+                <input type="radio" name="question-${index}" value="${letter}"/>
+                ${letter}: ${currentQuestion.answers[letter]}
+                <br/>`);
+            }
+            
+        }
+
+        // Build HTML for the question itself
+        output.push(`
+        <br/>
+        <div>${currentQuestion.question}</div>
+        <div>${answers.join('')}</div>
+        `);
+    });
+
+    // Combine our output array's contents into a single string of HTML and put it on the page
+    resultContainer.innerHTML = output.join('');
 }
 
 let quizQuestions = [
@@ -131,3 +203,5 @@ let quizQuestions = [
         correctAnswer: 'c'
     }
 ];
+
+
