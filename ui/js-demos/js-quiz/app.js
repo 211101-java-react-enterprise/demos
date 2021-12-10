@@ -11,8 +11,8 @@ window.onload = () => {
     quizDiv.setAttribute('id', 'quiz');
     resultsDiv.setAttribute('id', 'results');
     buttonDiv.setAttribute('id', 'button-container');
-    buttonDiv.style.padding = '2px';
-    buttonDiv.style.cssFloat = 'left';
+    buttonDiv.style.padding = '20px 0px';
+    // buttonDiv.style.cssFloat = 'left';
     submitBtn.setAttribute('id', 'submit');
     submitBtn.setAttribute('class', 'btn btn-primary');
     
@@ -60,23 +60,42 @@ function buildQuiz() {
         output.push(`
         <br/>
         <div>${currentQuestion.question}</div>
-        <div>${answers.join('')}</div>
+        <div id="question-${index}" class="questions">${answers.join('')}</div>
         `);
     });
 
     // Combine our output array's contents into a single string of HTML and put it on the page
     quizContainer.innerHTML = output.join('');
 
-
 }
 
-
 function isQuizValid() {
-
+    const answeredQuestions = document.querySelectorAll("input[type=radio]:checked");
+    if (answeredQuestions.length === quizQuestions.length) {
+        return true;
+    }
+    alert('You didn\' answer all the questions!')
+    return false;
 }
 
 function gradeQuiz() {
-
+    const results = document.getElementById('results');
+    if (isQuizValid()) {
+        while (results.firstChild) {
+            results.removeChild(results.firstChild);
+        }
+        let questions = document.getElementsByClassName('questions');
+        for (i = 0; i < questions.length; i++) {
+            const attempt = questions[i].querySelector("input[type=radio]:checked");
+            let p = document.createElement('p');
+            if (attempt.value === quizQuestions[i].correctAnswer) {
+                p.textContent = `Question ${i+1}: correct`
+            } else {
+                p.textContent = `Question ${i+1}: not correct`
+            }
+            results.appendChild(p);
+        }
+    }
 }
 
 let quizQuestions = [
@@ -96,7 +115,7 @@ let quizQuestions = [
             a: 147,
             b: 21,
             c: "777",
-            d: "147"
+            d: "\"147\""
         },
         correctAnswer: 'd'
     },
