@@ -53,8 +53,8 @@ function buildQuiz() {
         // For each answer in this question create a radio button
         for (let letter in currentQuestion.answers) {
             answers.push(`
-            <input type="radio" name="question-${index}" value="${letter}"/>
-            ${letter}: ${currentQuestion.answers[letter]}
+            <input type="radio" name="question-${index}" value="${letter}">
+            <text name="question-${index}-${letter}">${letter}: ${currentQuestion.answers[letter]}</text>
             <br/>`);
         }
 
@@ -86,6 +86,8 @@ function isQuizValid() {
 }
 
 function gradeQuiz() {
+    if (!isQuizValid) return;
+
     let checked = document.querySelectorAll('input[type=radio]:checked');
     let correct = 0;
 
@@ -97,10 +99,12 @@ function gradeQuiz() {
             // document.getElementById(`input[name=question-${i}]:checked`).setAttribute('style', 'color: green');
             // document.getElementByName(`input[name=question${i}]`).style.color = "green";
             // document.getElementByName('question-2').style.color = "green";
-            let userAnswer = document.querySelector(`input[name=question-${i}]:checked`);
+            let userAnswer = document.querySelector(`text[name=question-${i}-${value.value}]`);
             userAnswer.style.color="green";
             // document.userAnswer.style.color="green";
         } else {
+            let userAnswer = document.querySelector(`text[name=question-${i}-${value.value}]`);
+            userAnswer.style.color="red";
             // document.getElementById('input[name=question-${i}]').style.color = "red";
         }
         
@@ -108,7 +112,8 @@ function gradeQuiz() {
 
     let percentage = (correct/quizQuestions.length)*100
     let results = "" + percentage + "%";
-    document.getElementById('results').innerHTML = results;
+    var element = document.getElementById('results').innerHTML = results;
+    element.style.fontSize = "50px";
 }
 
 let quizQuestions = [
