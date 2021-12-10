@@ -52,9 +52,11 @@ function buildQuiz() {
         // For each answer in this question create a radio button
         for (let letter in currentQuestion.answers) {
             answers.push(`
+            <div id="question-${index}-answer-${letter}">
             <input type="radio" name="question-${index}" value="${letter}"/>
             ${letter}: ${currentQuestion.answers[letter]}
-            <br/>`);
+            </div>
+            `);
         }
 
         // Build HTML for the question itself
@@ -74,6 +76,8 @@ function isQuizValid() {
     let quizContainer = document.getElementById('quiz');
     let counter = 0;
 
+    //Since we have access to the questions in an array, we can just pull the total amount of questions from that
+    //and check for each particular question's answer radio buttons to see which is active.
     for(let i = 0; i < quizQuestions.length; i++) {
         if(document.querySelector(`input[name=question-${i}]:checked`).value) {
             counter++;
@@ -86,6 +90,7 @@ function isQuizValid() {
 }
 
 function gradeQuiz() {
+    //an array of all the different answers div
     let ref = document.getElementsByClassName('answer');
     let correctCounter = 0;
     for(let i = 0; i < quizQuestions.length; i++) {
@@ -93,6 +98,10 @@ function gradeQuiz() {
         let userAnswer = document.querySelector(`input[name=question-${i}]:checked`).value;
         if(realAnswer == userAnswer) {
             correctCounter++;
+            document.getElementById(`question-${i}-answer-${userAnswer}`).setAttribute("style", "color: green");
+        } else {
+            console.log(`question-${i}-answer${userAnswer}`);
+            document.getElementById(`question-${i}-answer-${userAnswer}`).setAttribute("style", "color: red");
         }
     }
     console.log(correctCounter/quizQuestions.length);
@@ -115,8 +124,8 @@ let quizQuestions = [
         answers: {
             a: 147,
             b: 21,
-            c: "777",
-            d: "147"
+            c: '"777"',
+            d: '"147"'
         },
         correctAnswer: 'd'
     },
