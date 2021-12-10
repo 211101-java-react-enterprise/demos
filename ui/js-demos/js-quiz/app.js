@@ -104,6 +104,7 @@ function gradeQuiz() {
 
     // Create an array which can hold the HTML that we will eventually render on the page
     const output = [];
+    var corCount = 0;
 
     // Loop through the array of questions and build some HTML for each one
     quizQuestions.forEach((currentQuestion, index) => {
@@ -114,27 +115,27 @@ function gradeQuiz() {
         // Check their answer
         var givenAnswer = document.querySelector(`input[name=question-${index}]:checked`).value;
         var isCorrect = givenAnswer == currentQuestion.correctAnswer;
+        if (isCorrect) corCount = corCount + 1;
+
+        
 
         // For each answer in this question create a radio button
         for (let letter in currentQuestion.answers) {
             // Regardless of if they got it right, the correct answer will be given in green
-            if (letter == currentQuestion.correctAnswer) {
+            if (letter == currentQuestion.correctAnswer) { // Correct answers are green
                 answers.push(`
-                <input type="radio" name="question-${index}" value="${letter}" color:00FF00/>
-                ${letter}: ${currentQuestion.answers[letter]}
-                <br/>`);
+                <p class = "text-white bg-success"> ${letter}: ${currentQuestion.answers[letter]} </p>
+                `);
             }
-            else if (letter == givenAnswer && !isCorrect){
+            else if (letter == givenAnswer && !isCorrect){ // Incorrect given answers are turned red
                 answers.push(`
-                <input type="radio" name="question-${index}" value="${letter}" class="bg-danger text-white"/>
-                ${letter}: ${currentQuestion.answers[letter]}
-                <br/>`);
+                <p class = "text-white bg-danger">${letter}: ${currentQuestion.answers[letter]} </p>
+                `);
             }
-            else {
+            else { // Other answers get a neutral print.
                 answers.push(`
-                <input type="radio" name="question-${index}" value="${letter}"/>
-                ${letter}: ${currentQuestion.answers[letter]}
-                <br/>`);
+                <p class = "text-black"> ${letter}: ${currentQuestion.answers[letter]} </p>
+                `);
             }
             
         }
@@ -142,10 +143,15 @@ function gradeQuiz() {
         // Build HTML for the question itself
         output.push(`
         <br/>
+        <br/>
         <div>${currentQuestion.question}</div>
         <div>${answers.join('')}</div>
         `);
     });
+
+    // Output the results in the end
+    output.push(`
+    <div><p classs = "h3"> You got ${corCount} / ${quizQuestions.length} correct! </p>`);
 
     // Combine our output array's contents into a single string of HTML and put it on the page
     resultContainer.innerHTML = output.join('');
