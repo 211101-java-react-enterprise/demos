@@ -29,6 +29,8 @@ window.onload = () => {
     buttonDiv.addEventListener('mouseover', isQuizValid);
     submitBtn.addEventListener('click', gradeQuiz);
 
+    // buttonDiv.setAttribute('disabled', !isQuizValid);
+
     buildQuiz();
 
 }
@@ -72,42 +74,41 @@ function buildQuiz() {
 
 
 function isQuizValid() {
-    //make sure all ansers are selected
-    // let checked = document.querySelector('input[type=radio]:checked');
-    // let answers = document.querySelectorAll(`[name="question-${i}"]`);
-
-    // for (let i = 0; i < quizQuestions.length; i++) {
-    //     let answers = document.querySelectorAll(`[name="question-${i}"]`);
-    //     console.log(answers);
-    // }
     
     let checked = document.querySelectorAll('input[type=radio]:checked');
-    console.log(checked);
+    // console.log(checked);
     if(checked.length >= quizQuestions.length) {
-        console.log(true);
+        return true;
     }
     else return false;
-    //let count = 0;
-    
-    // if($('input[type=radio]:checked').length==5){
-    //     //all yes elements are checked
-    //     console.log('yes');
-    // } else{
-    //     console.log('waaaaaaaaaaaaaaaaa');
-    // }
-   
 
-    // if( checked !=null){// && count >= quizQuestions.length){
-    //     console.log('congratss!');
-    // }else{
-    //     console.log('aww');
-    // }
-    // return false;
 
 }
 
 function gradeQuiz() {
+    let checked = document.querySelectorAll('input[type=radio]:checked');
+    let correct = 0;
 
+    for (let i=0; i<quizQuestions.length; i++) {
+        let value = checked[i];
+        console.log(value);
+        if (value.value == quizQuestions[i].correctAnswer) {
+            correct++;
+            // document.getElementById(`input[name=question-${i}]:checked`).setAttribute('style', 'color: green');
+            // document.getElementByName(`input[name=question${i}]`).style.color = "green";
+            // document.getElementByName('question-2').style.color = "green";
+            let userAnswer = document.querySelector(`input[name=question-${i}]:checked`);
+            userAnswer.style.color="green";
+            // document.userAnswer.style.color="green";
+        } else {
+            // document.getElementById('input[name=question-${i}]').style.color = "red";
+        }
+        
+    }
+
+    let percentage = (correct/quizQuestions.length)*100
+    let results = "" + percentage + "%";
+    document.getElementById('results').innerHTML = results;
 }
 
 let quizQuestions = [
