@@ -71,9 +71,16 @@ function buildQuiz() {
 }
 
 
-function isQuizValid() {
-
+function isQuizValid() { 
+    for(let i = 0; i < quizQuestions.length; i++){
+        document.querySelector(`name = "qustion-${i}`);
+        return true;
+    }
+    return false;
 }
+//for each queston, make sure it is clicked.
+//if so return true
+//if not return false
 
 function gradeQuiz() {
 
@@ -131,3 +138,4 @@ let quizQuestions = [
         correctAnswer: 'c'
     }
 ];
+
