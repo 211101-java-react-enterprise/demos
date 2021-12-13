@@ -1,6 +1,4 @@
 
-console.log("Hello World from Typescript!"); 
-
 /**
  * Typescript: 
  * 
@@ -28,6 +26,8 @@ s1 = "hello";
 s1 = 3;
 
 //In TS we can declare types for our variables. 
+//TS is a superset of JS, so it contains all the datatypes that JS has. 
+//Have a review of all the TS datatypes on top of JS!
 
 let s2; //implicitly declaring it to be of type "any"
 let s3: number; //s3 is of type number
@@ -104,8 +104,14 @@ function finalFunc(a: number|boolean,b: Array<boolean|string>, c: unknown): stri
 //In JS we don't have: 
 // class based inheritance (prototypical in nature)
 // interfaces 
-// "easy" encapsulation, we have to use closure (ES6)
-// we don't have overloading in JS  
+// "easy" encapsulation, we have to use closure (prior to ES6)
+// We don't have overloading in JS  
+
+
+//------------------------------Interfaces-----------------------------------
+
+//Interfaces allow us to start utilizing more abstraction in Javascript
+//Interfaces in TS allow us to define properties and methods that a child class or an object of that datatype will need to have.
 
 interface Moon{ //we define that any datatypes of type Moon, must have a name of type string. 
     name: string,
@@ -113,7 +119,7 @@ interface Moon{ //we define that any datatypes of type Moon, must have a name of
 }
 
 let theMoon: Moon;
-theMoon = {name:"The Moon", age:1};
+theMoon = {name:"The Moon", age:1}; //the object must have a name and an age, no more or less properties.
 
 
 interface Planet{
@@ -132,7 +138,9 @@ let Earth : Planet ={
     }
 }
 
-//a class can implement an interface
+//-------------------------------TS Class---------------------------------------
+
+//a class can implement an interface, the interface will force the class to declare at least those properties defined by "Moon"
 class Star implements Moon{
 
     /**
@@ -144,6 +152,11 @@ class Star implements Moon{
     size: number;
     planets: number;
 
+    //-----------------(Polymorphism) Overloading--------------------------------------
+    // In TS we can't make multiple constructors!
+    // Instead we get Optional paramenters, which defines which arguments don't need to be added when invoking functions/constructors. 
+    // Optional parameters HAVE to be on the right hand side of the non-optiaonl parameters!
+
     constructor(name: string, age: number, size?: number, planets?: number){
         this.name = name;
         this.age = age;
@@ -151,25 +164,27 @@ class Star implements Moon{
         this.planets = planets;
 
     }
-
-    //In TS we can't make multiple constructors!
-    // Instead wu get optional parameters. Optional paramenters, don't need to be added when invoking the function/constructor. 
-    // Optional parameters HAVE to be on the right hand side of the non-optiaonl parameters!
-
-    // constructor(name: string, age: number, size: number, planets: number){ 
-    //     this.name = name;
-    //     this.age = age;
-    //     this.size = size;
-    //     this.planets = planets;
-    // }
-
+    
     fusion(): void {
         console.log(`${this.name} is fusing and getting brighter!`)
     }
 }
 
 class NeutronStar extends Star{
+    exploded: boolean;
 
+
+    constructor(name: string, age: number, exploded:boolean, size?: number, planets?: number){
+        super(name,age,size,planets); //when defining a constructor in a child class, you MUST declare the super(...) constructor of the parent class.
+        this.exploded = exploded;
+    }
+
+    //-----------------(Polymorphism) Overloading--------------------------------------
+    fusion(): void {
+        // super();// this will not work, because super is only allowed in constructors.
+        this.exploded = true;
+        console.log(`${this.name} is fusing and getting brighter!`)
+    }
 }
 
 let theSun = new Star("The Sun",1000); //we creating a star without any planet information or size info
@@ -177,12 +192,13 @@ let alphaProximus = new Star("Alpha",2000,2); //we creating a star without any p
 let betaProximus = new Star("Beta",2000,2,4);
 
 
-let pulsar = new NeutronStar("Pulasr",4000);
+let pulsar = new NeutronStar("Pulasr",4000,false);
 
 // console.log(theSun);
 // console.log(alphaProximus);
 // console.log(betaProximus);
-// pulsar.fusion();
+pulsar.fusion();
+console.log("Has the star exploded? " + pulsar.exploded);
 
 
 class Animal {
@@ -220,4 +236,30 @@ let dog = new Animal("Bobby",true,"German Shepard",3);
 dog.Breed = "Dalmations"; //using the setter method
 console.log(dog.Breed); //using the getter method!
 
-// console.log(dog);
+
+class Bird {
+
+    //------------------------------------reducing boiler plate code ------------------------------
+    // name: string;
+    // age: number;
+    // private fly: boolean;
+
+    // constructor(name: string,age: number,fly: boolean){
+    //     this.age = age;
+    //     this.name = name;
+    //     this.fly = fly;
+    // }
+
+    constructor(public name: string, public age: number, private fly?: boolean){ //this snippet of code does everything above it!
+        //In TS, when we provide an access modifer to the argument in the constructor, it will associate the variable as a property of the 
+        // instantiated object! 
+    }
+
+    get Fly(): boolean{
+        return this.fly;
+    }
+}
+
+let sparrow = new Bird("Sparrowy",1);
+let crow = new Bird("Carry",2,true);
+console.log(crow.Fly);

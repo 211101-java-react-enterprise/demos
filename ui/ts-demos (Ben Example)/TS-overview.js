@@ -1,4 +1,3 @@
-console.log("Hello World from Typescript!");
 /**
  * Typescript:
  *
@@ -24,6 +23,8 @@ let s1;
 s1 = "hello";
 s1 = 3;
 //In TS we can declare types for our variables. 
+//TS is a superset of JS, so it contains all the datatypes that JS has. 
+//Have a review of all the TS datatypes on top of JS!
 let s2; //implicitly declaring it to be of type "any"
 let s3; //s3 is of type number
 let s4;
@@ -82,7 +83,7 @@ function finalFunc(a, b, c) {
     return true;
 }
 let theMoon;
-theMoon = { name: "The Moon", age: 1 };
+theMoon = { name: "The Moon", age: 1 }; //the object must have a name and an age, no more or less properties.
 let Earth = {
     name: "The Earth",
     hasRings: false,
@@ -91,37 +92,44 @@ let Earth = {
         console.log("does nothing!");
     }
 };
-//a class can implement an interface
+//-------------------------------TS Class---------------------------------------
+//a class can implement an interface, the interface will force the class to declare at least those properties defined by "Moon"
 class Star {
+    //-----------------(Polymorphism) Overloading--------------------------------------
+    // In TS we can't make multiple constructors!
+    // Instead we get Optional paramenters, which defines which arguments don't need to be added when invoking functions/constructors. 
+    // Optional parameters HAVE to be on the right hand side of the non-optiaonl parameters!
     constructor(name, age, size, planets) {
         this.name = name;
         this.age = age;
         this.size = size;
         this.planets = planets;
     }
-    //In TS we can't make multiple constructors!
-    // Instead wu get optional parameters. Optional paramenters, don't need to be added when invoking the function/constructor. 
-    // Optional parameters HAVE to be on the right hand side of the non-optiaonl parameters!
-    // constructor(name: string, age: number, size: number, planets: number){ 
-    //     this.name = name;
-    //     this.age = age;
-    //     this.size = size;
-    //     this.planets = planets;
-    // }
     fusion() {
         console.log(`${this.name} is fusing and getting brighter!`);
     }
 }
 class NeutronStar extends Star {
+    constructor(name, age, exploded, size, planets) {
+        super(name, age, size, planets); //when defining a constructor in a child class, you MUST declare the super(...) constructor of the parent class.
+        this.exploded = exploded;
+    }
+    //-----------------(Polymorphism) Overloading--------------------------------------
+    fusion() {
+        // super();// this will not work, because super is only allowed in constructors.
+        this.exploded = true;
+        console.log(`${this.name} is fusing and getting brighter!`);
+    }
 }
 let theSun = new Star("The Sun", 1000); //we creating a star without any planet information or size info
 let alphaProximus = new Star("Alpha", 2000, 2); //we creating a star without any planet information
 let betaProximus = new Star("Beta", 2000, 2, 4);
-let pulsar = new NeutronStar("Pulasr", 4000);
+let pulsar = new NeutronStar("Pulasr", 4000, false);
 // console.log(theSun);
 // console.log(alphaProximus);
 // console.log(betaProximus);
-// pulsar.fusion();
+pulsar.fusion();
+console.log("Has the star exploded? " + pulsar.exploded);
 class Animal {
     constructor(name, neutered, breed, age) {
         this.age = age;
@@ -141,4 +149,27 @@ class Animal {
 let dog = new Animal("Bobby", true, "German Shepard", 3);
 dog.Breed = "Dalmations"; //using the setter method
 console.log(dog.Breed); //using the getter method!
-// console.log(dog);
+class Bird {
+    //------------------------------------reducing boiler plate code ------------------------------
+    // name: string;
+    // age: number;
+    // private fly: boolean;
+    // constructor(name: string,age: number,fly: boolean){
+    //     this.age = age;
+    //     this.name = name;
+    //     this.fly = fly;
+    // }
+    constructor(name, age, fly) {
+        this.name = name;
+        this.age = age;
+        this.fly = fly;
+        //In TS, when we provide an access modifer to the argument in the constructor, it will associate the variable as a property of the 
+        // instantiated object! 
+    }
+    get Fly() {
+        return this.fly;
+    }
+}
+let sparrow = new Bird("Sparrowy", 1);
+let crow = new Bird("Carry", 2, true);
+console.log(crow.Fly);
