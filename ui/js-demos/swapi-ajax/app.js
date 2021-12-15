@@ -122,7 +122,8 @@ async function awaitInfo() {
         let resp = await fetch(`https://swapi.dev/api/${category}/${id}`);
         console.log('doesn\'t print if the fetch call fails');
         let data = await resp.json();
-        console.log(data);
+        sessionStorage.setItem('swapi-data', JSON.stringify(data));
+        localStorage.setItem('swapi-data', JSON.stringify(data));
     } catch (err) {
         console.log('maybe?')
         console.error(err);
