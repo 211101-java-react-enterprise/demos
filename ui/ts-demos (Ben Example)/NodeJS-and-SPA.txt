@@ -1,0 +1,40 @@
+Node.js 
+
+	Node.js is an open-source, cross-platform "runtime environment" for Javascript. 
+	It's the Chrome's V8 JavaScript engine, ripped out of the browser. 
+	
+	It allows us to execute JS code outside of a web browser and provides us a variety of 
+	Javascript modules/files. 
+
+	When we install node.js, we also get the npm. (NPM will be very useful this week)
+
+npm - Node Package Manager
+
+	npm is a package manager for Node and allows us to locally install useful libraries. 
+
+
+Single Page Applications?
+	An application with a single page. React and Angular focus on making Single page applications. 
+	
+	A single page application, has a single html file, that is typically called Index.html . 
+	Instead of navigating to another html file, when you're clicking on a link, it will use DOM manipluation to 
+	recreate the same HTML page. 
+
+	
+	SPA is a web applicaiton that fits on a single page in the browser. 
+	All the necessary code: HTML, JS, CSS is retrieved by the browser in a single load. 
+	So thather than navigation on a website being avhieved using multiple (static) html pages, we will 
+	dynamically modify elements within the page. 
+ 
+	Advantages: 
+		Fast and responsive: SPA only updates the required elements/content. 
+			So HTML , CSS and JS are only loaded once. This is *significantly* faster than normal navigation. 
+		Caching capabilities: SPA can cache rquest locally, it can reuse the data and to an extent even work offline. 
+			(with the data being synchronised with the server when possible)
+
+	Disadvantages: 
+		Data is frontloaded: the first page is going to be loaded slower because it's loading up everything on the first 
+			request (but overall it will stil be quicker once you start using it) 
+		Poor performance in engine optimization: (minor disadvantage) 
+		SPA are less secure towards Cross-site (XSS) attacks. 
+	
