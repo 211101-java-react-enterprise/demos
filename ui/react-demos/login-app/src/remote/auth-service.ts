@@ -9,12 +9,10 @@ export const authenticate = async (credentials: {username: string, password: str
         throw resp.data;
     }
 
-    if (resp.status == 204) {
+    if (resp.status == 200) {
         console.log('Authentication success!'); 
-        // TODO: refactor backend to return a Principal object rather than no content
     }
 
-    // return resp.data;
-    return new Principal('123456789', 'wsingleton', 'ADMIN');
+    return resp.data;
 
 }

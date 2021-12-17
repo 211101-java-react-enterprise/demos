@@ -25,7 +25,7 @@ export function LoginComponent(props: ILoginProps) {
     let login = async () => {
         try {
             let principal = await authenticate({username, password});
-            console.log(principal);
+            props.setCurrentUser(principal);
         } catch (e: any) {
             setErrorMessage(e.message);
         }
