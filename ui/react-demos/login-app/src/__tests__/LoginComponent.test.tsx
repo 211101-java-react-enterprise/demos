@@ -92,7 +92,15 @@ describe('LoginComponent Test Suite', () => {
     });
 
     it('Clicking login button with missing form field values displays an error message', () => {
+        let stubbedUser = undefined;
+        let mockSetUserFn = jest.fn();
 
+        const wrapper = mount(<LoginComponent currentUser={stubbedUser} setCurrentUser={mockSetUserFn} />);
+        const loginButtonWrapper = wrapper.find('#login-button');
+
+        loginButtonWrapper.simulate('click');
+
+        expect(authenticate).toBeCalledTimes(0);
     });
 
 });

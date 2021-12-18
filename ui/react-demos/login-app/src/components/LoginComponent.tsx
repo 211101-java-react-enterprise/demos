@@ -2,6 +2,7 @@ import { SyntheticEvent, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Principal } from "../models/Principal";
 import { authenticate } from "../remote/auth-service";
+import ErrorMessageComponent from "./ErrorMessageComponent";
 
 interface ILoginProps {
     currentUser: Principal | undefined,
@@ -49,6 +50,7 @@ function LoginComponent(props: ILoginProps) {
                 <button id="login-button" onClick={login}>Login</button>
                 <br/><br/>
             </div>
+            {errorMessage ? <ErrorMessageComponent errorMessage={errorMessage}/> : <></>}
         </>
     );
 
