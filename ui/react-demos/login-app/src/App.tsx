@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
-import { LoginComponent } from './components/LoginComponent';
+import LoginComponent from './components/LoginComponent';
 import { Principal } from './models/Principal';
-import { DashboardComponent } from './components/DashboardComponent';
+import DashboardComponent from './components/DashboardComponent';
 
 function App() {
 

@@ -8,7 +8,7 @@ interface ILoginProps {
     setCurrentUser: (nextUser: Principal| undefined) => void
 }
 
-export function LoginComponent(props: ILoginProps) {
+function LoginComponent(props: ILoginProps) {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -23,6 +23,12 @@ export function LoginComponent(props: ILoginProps) {
     }
 
     let login = async () => {
+        
+        if (!username || !password) {
+            setErrorMessage('You must provide a username and password!');
+            return;
+        }
+
         try {
             let principal = await authenticate({username, password});
             props.setCurrentUser(principal);
@@ -34,11 +40,11 @@ export function LoginComponent(props: ILoginProps) {
     return (
         props.currentUser ? <Navigate to="/dashboard"/> : 
         <>
-            <h4>Log in to your account</h4>
+            <h4>Log in to your account!</h4>
             <div>
-                <input type="text" id="username" placeholder="Enter your username" onChange={updateUsername}/>
+                <input type="text" id="username" name="username" placeholder="Enter your username" onChange={updateUsername} />
                 <br/><br/>
-                <input type="password" id="password" placeholder="Enter your password" onChange={updatePassword}/>
+                <input type="password" id="password" name="password" placeholder="Enter your password" onChange={updatePassword}/>
                 <br/><br/>
                 <button id="login-button" onClick={login}>Login</button>
                 <br/><br/>
@@ -47,3 +53,5 @@ export function LoginComponent(props: ILoginProps) {
     );
 
 }
+
+export default LoginComponent;

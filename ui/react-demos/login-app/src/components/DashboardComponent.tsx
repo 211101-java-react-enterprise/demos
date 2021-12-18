@@ -5,9 +5,11 @@ interface IDashboardProps {
     currentUser: Principal | undefined;
 }
 
-export function DashboardComponent(props: IDashboardProps) {
+function DashboardComponent(props: IDashboardProps) {
     return (
         !props.currentUser ? <Navigate to="/login"/> :
         <h1>Welcome, {props.currentUser.username}!</h1>
     );
 }
+
+export default DashboardComponent;
